@@ -243,5 +243,13 @@ tags: jekyll chirpy theme github_pages
 
 - Verify on GitHub Pages site   
 
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-00-03-02.png)   
+
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-00-03-42.png)  
+
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-00-03-59.png)  
+
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-00-04-12.png)  
+
 ## (Optional) Monetizing a Jekyll blog with Adsense  
   [https://ncona.com/2020/11/monetizing-a-jekyll-blog-with-adsense/](https://ncona.com/2020/11/monetizing-a-jekyll-blog-with-adsense/)  
