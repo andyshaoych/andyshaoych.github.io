@@ -174,8 +174,12 @@ tags: jekyll chirpy theme github_pages
   ```
 
 - Make sure `GitHub Actions workflow` build successfully done.   
+  ``
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-20-48-05.png)   
-
+  ![](images/2022-08-08-09-05-31.png)  
+  ![](images/2022-08-08-09-06-35.png)  
+  ![](images/2022-08-08-09-06-53.png)  
+  
 - Verify `gh-pages` branch is created by the above workflow, to store the built `site` files.  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-21-05-57.png)   
 
@@ -187,6 +191,7 @@ tags: jekyll chirpy theme github_pages
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-21-23-04.png)
 
 - Verify the newly deployed site   
+  Note) This deployment is done by GitHub Pages workflow 
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-21-37-39.png)   
 
 ## Add a new post to the site with Markdown  
@@ -237,6 +242,9 @@ tags: jekyll chirpy theme github_pages
     $ git commit -m "first update"
     $ git push
   ```
+
+- Verify the GitHub Actions  
+
 
 - Verify on GitHub Pages site   
 
