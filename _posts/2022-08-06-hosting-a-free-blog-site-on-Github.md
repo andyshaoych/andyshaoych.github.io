@@ -215,6 +215,33 @@ tags: jekyll chirpy theme github_pages
 
 - Verify at local  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-23-15-53.png)  
+
+## Customize the site via `_config.yml`  
+- Update the variables of _config.yml  
+  ```
+    avatar: /assets/images/avatar.png
+
+    timezone: Australia/Sydney
+    title: DevOps                          # the main title
+    tagline: Andy Shao's Tech Notes   # it will display as the sub-title
+
+    github:
+      username: andyshaoych             # change to your github username
+
+    social:
+      name: Andy Shao
+        - https://github.com/andyshaoych       # change to your github homepage
+        - https://www.linkedin.com/in/andyshao
+  ```
   
+- Commit and push the code up to GitHub  
+  ```bash
+    $ git add . 
+    $ git commit -m "first update"
+    $ git push
+  ```
+
+- Verify on GitHub Pages site   
+
 ## (Optional) Monetizing a Jekyll blog with Adsense  
   [https://ncona.com/2020/11/monetizing-a-jekyll-blog-with-adsense/](https://ncona.com/2020/11/monetizing-a-jekyll-blog-with-adsense/)  
