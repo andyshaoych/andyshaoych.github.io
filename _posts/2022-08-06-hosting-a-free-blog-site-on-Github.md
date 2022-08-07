@@ -190,8 +190,6 @@ tags: jekyll chirpy theme github_pages
 - Verify the newly deployed site   
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-21-37-39.png)   
 
-## Customize the site   
-
 ## Add a new post to the site with Markdown  
 - Add a Markdown file to `_posts` with naming convention as `YYYY-MM-DD-NAME-OF-POST.md`, e.g,  
   `2022-08-06-hosting-a-free-blog-site-on-Github.md`  
