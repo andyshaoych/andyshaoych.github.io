@@ -173,13 +173,13 @@ tags: jekyll chirpy theme github_pages
     $ git push
   ```
 
-- Make sure `GitHub Actions workflow` build successfully done.   
-  ``
+- Make sure `pages-deploy.yml` workflow under `GitHub Actions` build successfully done.   
+  Our `pages-deploy.yml` workflow will displayed as `your git commit message`, which triggered via push:  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-20-48-05.png)   
-  ![](images/2022-08-08-09-05-31.png)  
-  ![](images/2022-08-08-09-06-35.png)  
-  ![](images/2022-08-08-09-06-53.png)  
-  
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-05-31.png)  
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-06-35.png)  
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-06-53.png)  
+
 - Verify `gh-pages` branch is created by the above workflow, to store the built `site` files.  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-21-05-57.png)   
 
@@ -189,6 +189,11 @@ tags: jekyll chirpy theme github_pages
 - Select GitHub Pages source to `gh-pages` branch:   
   Settings → Options → GitHub Pages → Save  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-21-23-04.png)
+
+- Verify workflow `pages build and deployment` build successfully done.   
+  Triggered via GitHub Pages (bot)   
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-19-27.png)  
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-19-46.png)  
 
 - Verify the newly deployed site   
   Note) This deployment is done by GitHub Pages workflow 
