@@ -1,4 +1,8 @@
 # hidden files
+
+.DS_Store  
+.vscode
+
 .*
 !.git*
 !.editorconfig
