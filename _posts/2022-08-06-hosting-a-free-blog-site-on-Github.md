@@ -174,7 +174,7 @@ tags: jekyll chirpy theme github_pages
   ```
 
 - Make sure `pages-deploy.yml` workflow under `GitHub Actions` build successfully done.   
-  Our `pages-deploy.yml` workflow will displayed as `your git commit message`, which triggered via push:  
+  Our `pages-deploy.yml` workflow will displayed as `your git commit message`, which triggered via push and built`gh-pages` branch:  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-20-48-05.png)   
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-05-31.png)  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-06-35.png)  
@@ -191,7 +191,7 @@ tags: jekyll chirpy theme github_pages
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-07-21-23-04.png)
 
 - Verify workflow `pages build and deployment` build successfully done.   
-  Triggered via GitHub Pages (bot)   
+  Triggered via GitHub Pages (bot) and build `github.io` site.  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-19-27.png)  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-09-19-46.png)  
 
