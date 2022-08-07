@@ -6,7 +6,6 @@ categories: django Web-API
 tags: django web REST API
 ---
 
-# Django Web and REST API server development  
 - Project folder: labs02/django/movie  
 - Django Python Web server   
   - Ref: https://youtu.be/EuBQU_miReM   
@@ -573,7 +572,7 @@ tags: django web REST API
   ![](/assets/images/django-web-api/2022-07-31-12-56-40.png)  
 
 # Django REST Framework - Build an API from Scratch  
-- https://youtu.be/i5JykvxUk_A   
+- Ref: https://youtu.be/i5JykvxUk_A   
 
 - Continued with the above `movies` project  
 
