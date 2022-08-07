@@ -8,7 +8,6 @@ tags: jekyll chirpy theme github_pages
 
 ## Facts  
 - This [site](https://andyshaoych.github.io/) is hosted on *Github Pages* with *Jekyll*    
-  Check out **Deploy on Other Platforms** [here](https://www.rubydoc.info/gems/jekyll-theme-chirpy/3.0.2)  
 - Jekyll in Ruby: Static site generator (Chirpy Theme)   
 - Local workstation: **MacOS**  
 - Tools: Visual Code / git / Ruby  
