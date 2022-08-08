@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Django Web and REST API"
+title: "Django Web Framework and REST API"
 date:   2022-08-07 20:18:40 +1000
 categories: django Web-API
 tags: django web REST API
