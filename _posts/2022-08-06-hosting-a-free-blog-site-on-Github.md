@@ -252,13 +252,16 @@ tags: jekyll chirpy theme github_pages
 
 
 - Verify on GitHub Pages site   
-
+  - home  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-00-03-02.png)   
 
+  - Categories  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-00-03-42.png)  
 
+  - Tags  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-00-03-59.png)  
 
+  - Archives  
   ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-00-04-12.png)  
 
 ## (Optional) Monetizing a Jekyll blog with Adsense  
