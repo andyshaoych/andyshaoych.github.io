@@ -248,8 +248,8 @@ tags: jekyll chirpy theme github_pages
     $ git push
   ```
 
-- Verify the GitHub Actions  
-
+- Verify the GitHub Actions workflows   
+  ![](/assets/images/hosting-a-free-blog-site-on-Github/2022-08-08-10-45-20.png)  
 
 - Verify on GitHub Pages site   
   - home  
