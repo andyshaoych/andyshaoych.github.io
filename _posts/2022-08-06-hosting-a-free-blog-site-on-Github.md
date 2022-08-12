@@ -1,6 +1,6 @@
 ---
 layout: post  
-title:  "Quick guide to hosting a free blog site on Github"  
+title:  "Quick guide to hosting a free blog site on github.io"  
 date:   2022-08-06 19:58:40 +1000  
 categories: github_pages jekyll  
 tags: jekyll chirpy theme github_pages  
