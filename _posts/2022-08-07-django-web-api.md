@@ -170,9 +170,35 @@ tags: django web REST API
       Starting development server at http://127.0.0.1:8000/
       Quit the server with CONTROL-C.
   ```
-  ![](/assets/images/django-web-api/2022-07-30-11-53-05.png)  
+  ![](images/2022-07-30-11-53-05.png)  
 
-  ![](/assets/images/django-web-api/2022-07-30-11-53-38.png)  
+  ![](images/2022-07-30-11-53-38.png)  
+
+- In case of Error `_sqlite3`  
+    ```bash
+    File "/usr/local/lib/python3.7/sqlite3/dbapi2.py", line 27, in <module>
+        from _sqlite3 import *
+    ModuleNotFoundError: No module named '_sqlite3'
+  ```
+    OR  
+  ```bash
+    File "/home/andys/.venv/lib/python3.9/site-packages/django/db/backends/sqlite3/_functions.py", line 45, in register
+        create_deterministic_function("django_date_extract", 2, _sqlite_datetime_extract)
+    django.db.utils.NotSupportedError: deterministic=True requires SQLite 3.8.3 or higher
+  ```
+
+  - Solution: changing the database from `sqlite3` to `pysqlite3`   
+
+    ```bash
+      pip3 install pysqlite3
+      pip3 install pysqlite3-binary 
+
+      vim ~/.venv/lib/python3.9/site-packages/django/db/backends/sqlite3/base.py
+        # from sqlite3 import dbapi2 as Database # annotation
+        from pysqlite3 import dbapi2 as Database # import pysqlite3
+    ```
+
+    Restart django server and it works.  
 
 ## urlpatterns list routes URLs to views  
 - urls.py  
@@ -199,7 +225,7 @@ tags: django web REST API
     def home(request):
         return HttpResponse("home page!")
   ```
-  ![](/assets/images/django-web-api/2022-07-30-12-39-46.png)  
+  ![](images/2022-07-30-12-39-46.png)  
 
 ## create views - render the template   
 - update `movies` in views.py  
@@ -235,9 +261,9 @@ tags: django web REST API
         'django.contrib.admin',
   ```
 
-![](/assets/images/django-web-api/2022-07-30-12-57-20.png)  
+![](images/2022-07-30-12-57-20.png)  
 
-![](/assets/images/django-web-api/2022-07-30-12-58-42.png)  
+![](images/2022-07-30-12-58-42.png)  
 
 ## mock data from dictionary   
 - expand `data`(movies) in views.py   
@@ -263,7 +289,7 @@ tags: django web REST API
         ]
     } 
   ```
-  ![](/assets/images/django-web-api/2022-07-30-13-13-35.png)   
+  ![](images/2022-07-30-13-13-35.png)   
 
 - loop through movies data in ./templates/movies/movies.html `template`  
   `{{movie.title}}`   
@@ -290,7 +316,7 @@ tags: django web REST API
         <body>
     </html>
   ```
-  ![](/assets/images/django-web-api/2022-07-30-13-50-01.png)  
+  ![](images/2022-07-30-13-50-01.png)  
 
 ## Migrate & createsuperuser (password)   
 
@@ -383,12 +409,13 @@ tags: django web REST API
   ```
 
 - restart server  
-  `(.venv) $ python manage.py runserver`   
+  `(.venv) $ python manage.py runserver` ## listens on 127.0.0.1 loopback only  
+  `(.venv) $ python manage.py runserver 0.0.0.0:8000`  ## to listen on every interface on port 8000  
 
 - Verify the table on Admin page   
-  ![](/assets/images/django-web-api/2022-07-30-16-45-18.png)  
+  ![](images/2022-07-30-16-45-18.png)  
 
-  ![](/assets/images/django-web-api/2022-07-30-16-46-12.png)  
+  ![](images/2022-07-30-16-46-12.png)  
 
 - Improve the description of the table object: Movie object (2)  
   override a method inside the model 
@@ -403,7 +430,7 @@ tags: django web REST API
 
 - Verify the table on Admin page   
 
-  ![](/assets/images/django-web-api/2022-07-30-16-54-09.png)   
+  ![](images/2022-07-30-16-54-09.png)   
 
 ## Query data from the database   
 - Modify views.py   
@@ -421,7 +448,7 @@ tags: django web REST API
     ...
 
   ```
-  ![](/assets/images/django-web-api/2022-07-30-21-42-40.png)  
+  ![](images/2022-07-30-21-42-40.png)  
 
 ## Detail View/Template  
 - new `detail` view in `views.py`  
@@ -455,9 +482,9 @@ tags: django web REST API
     {% endfor %}
   ```
 
-  ![](/assets/images/django-web-api/2022-07-30-22-45-55.png)  
+  ![](images/2022-07-30-22-45-55.png)  
 
-  ![](/assets/images/django-web-api/2022-07-30-22-46-09.png)  
+  ![](images/2022-07-30-22-46-09.png)  
 
 ## Create a movie  
 - new url to `urls.py`  
@@ -495,20 +522,21 @@ tags: django web REST API
       <input type="submit" value="Add">
     </form>
   ```
-
-- Error if  not presents    
-  ![](/assets/images/django-web-api/2022-07-30-23-27-38.png)   
+  ![](images/2022-08-28-23-12-29.png)  
+  
+- Error if `csrf_token` not presents    
+  ![](images/2022-07-30-23-27-38.png)   
 
 - inspect the `add` POST payload    
   `Network / Payload`  
-  ![](/assets/images/django-web-api/2022-07-30-23-35-38.png)  
+  ![](images/2022-07-30-23-35-38.png)  
 
 - excercise  
-  ![](/assets/images/django-web-api/2022-07-30-23-56-17.png)  
+  ![](images/2022-07-30-23-56-17.png)  
 
-  ![](/assets/images/django-web-api/2022-07-30-23-57-12.png)  
+  ![](images/2022-07-30-23-57-12.png)  
 
-  ![](/assets/images/django-web-api/2022-07-30-23-57-25.png)  
+  ![](images/2022-07-30-23-57-25.png)  
 
 ## Delete a movie   
 - new url to `urls.py`  
@@ -530,23 +558,23 @@ tags: django web REST API
   ```
 
 - excercise  
-  ![](/assets/images/django-web-api/2022-07-31-12-15-34.png)  
+  ![](images/2022-07-31-12-15-34.png)  
 
   **Note**) When `test01` clicked:   
-  ![](/assets/images/django-web-api/2022-07-31-12-15-56.png)  
+  ![](images/2022-07-31-12-15-56.png)  
   
   **Note**) When `Delete movie` clicked:   
-  ![](/assets/images/django-web-api/2022-07-31-12-16-12.png)  
+  ![](images/2022-07-31-12-16-12.png)  
 
 ## Exception Handling of Delete   
 - test with a non-existing ID ( `111` )  
 
 - DEBUG on (default)  
-  ![](/assets/images/django-web-api/2022-07-31-12-46-02.png)  
+  ![](images/2022-07-31-12-46-02.png)  
 
-  ![](/assets/images/django-web-api/2022-07-31-12-46-39.png)  
+  ![](images/2022-07-31-12-46-39.png)  
 
-  ![](/assets/images/django-web-api/2022-07-31-12-53-37.png) 
+  ![](images/2022-07-31-12-53-37.png) 
 
 - DEBUG off in `settings.py`
   ```python  
@@ -557,7 +585,7 @@ tags: django web REST API
   ```
 
   Bad Request (400)   
-  ![](/assets/images/django-web-api/2022-07-31-12-41-41.png)    
+  ![](images/2022-07-31-12-41-41.png)    
 
 - Change `localhost` to `127.0.0.1`  
   ```python  
@@ -569,7 +597,7 @@ tags: django web REST API
   ```
 
   Server Error (500)  
-  ![](/assets/images/django-web-api/2022-07-31-12-56-40.png)  
+  ![](images/2022-07-31-12-56-40.png)  
 
 # Django REST Framework - Build an API from Scratch  
 - Ref: https://youtu.be/i5JykvxUk_A   
@@ -580,7 +608,7 @@ tags: django web REST API
   ```bash
     (.venv) $ pip install djangorestframework   
   ```
-  ![](/assets/images/django-web-api/2022-08-01-11-34-57.png)  
+  ![](images/2022-08-01-11-34-57.png)  
 
 - update `INSTALLED_APPS` in settings.py  
 
@@ -621,4 +649,4 @@ tags: django web REST API
 
 - verify the REST API server   
   `http://127.0.0.1:8000/movies_rest/`  
-  ![](/assets/images/django-web-api/2022-08-01-11-52-14.png)   
+  ![](images/2022-08-01-11-52-14.png)   
