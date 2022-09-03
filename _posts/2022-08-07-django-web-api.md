@@ -6,7 +6,7 @@ categories: django Web-API
 tags: django web REST API
 ---
 
-- Project folder: labs02/django/movie  
+- Project Repo: https://github.com/andyshaoych/django-web-api-demo   
 - Django Python Web server   
   - Ref: https://youtu.be/EuBQU_miReM   
 - see the bottom for 
