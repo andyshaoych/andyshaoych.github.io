@@ -1,0 +1,659 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="Django Web Framework and REST API" /><meta property="og:locale" content="en" /><meta name="description" content="Project Repo: https://github.com/andyshaoych/django-web-api-demo Django Python Web server Ref: https://youtu.be/EuBQU_miReM see the bottom for Django REST Framework - Build an API server" /><meta property="og:description" content="Project Repo: https://github.com/andyshaoych/django-web-api-demo Django Python Web server Ref: https://youtu.be/EuBQU_miReM see the bottom for Django REST Framework - Build an API server" /><link rel="canonical" href="/posts/django-web-api/" /><meta property="og:url" content="/posts/django-web-api/" /><meta property="og:site_name" content="DevOps" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-08-07T20:18:40+10:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Django Web Framework and REST API" /><meta name="twitter:site" content="@twitter_username" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-09-03T14:19:47+10:00","datePublished":"2022-08-07T20:18:40+10:00","description":"Project Repo: https://github.com/andyshaoych/django-web-api-demo Django Python Web server Ref: https://youtu.be/EuBQU_miReM see the bottom for Django REST Framework - Build an API server","headline":"Django Web Framework and REST API","mainEntityOfPage":{"@type":"WebPage","@id":"/posts/django-web-api/"},"url":"/posts/django-web-api/"}</script><title>Django Web Framework and REST API | DevOps</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="DevOps"><meta name="application-name" content="DevOps"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="/assets/images/avatar/avatar.png" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">DevOps</a></div><div class="site-subtitle font-italic">Andy Shao's Tech Notes</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/andyshaoych" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/twitter_username" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['example','doamin.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>Django Web Framework and REST API</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper" class="d-flex justify-content-center"><div id="main" class="container pl-xl-4 pr-xl-4"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4"><div class="post pl-1 pr-1 pl-md-2 pr-md-2"><h1 data-toc-skip>Django Web Framework and REST API</h1><div class="post-meta text-muted"> <span> Posted <em class="" data-ts="1659867520" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Aug 7, 2022 </em> </span> <span> Updated <em class="" data-ts="1662178787" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Sep 3, 2022 </em> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://github.com/andyshaoych">Andy Shao</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1703 words"> <em>9 min</em> read</span></div></div></div><div class="post-content"><ul><li>Project Repo: https://github.com/andyshaoych/django-web-api-demo<li>Django Python Web server<ul><li>Ref: https://youtu.be/EuBQU_miReM</ul><li>see the bottom for Django REST Framework - Build an API server</ul><h2 id="toc"><span class="mr-2">TOC</span><a href="#toc" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li><a href="#setup-the-virtual-env--install-django">setup the virtual env &amp; install <code class="language-plaintext highlighter-rouge">Django</code></a><li><a href="#start-a-django-project">start a Django project</a><li><a href="#google-a-django-gitignore-file">google a Django .gitignore file</a><li><a href="#start-web-server-in-bash-for-this-time">start web server (in <code class="language-plaintext highlighter-rouge">bash</code> for this time)</a><li><a href="#urlpatterns-list-routes-urls-to-views">urlpatterns list routes URLs to views</a><li><a href="#create-views---response-with-message">create views - response with message</a><li><a href="#create-views---render-the-template">create views - render the template</a><li><a href="#mock-data-from-dictionary">mock data from dictionary</a><li><a href="#migrate--createsuperuser-password">Migrate &amp; createsuperuser (password)</a><li><a href="#define-movie-data-model-dbsqlite3">Define Movie data model (db.sqlite3)</a><li><a href="#add-the-new-table-movie-to-admin-page">Add the new table Movie to Admin page</a><li><a href="#query-data-from-the-database">Query data from the database</a><li><a href="#detail-viewtemplate">Detail View/Template</a><li><a href="#create-a-movie">Create a movie</a><li><a href="#delete-a-movie">Delete a movie</a><li><a href="#exception-handling-of-delete">Exception Handling of Delete</a><li><a href="#django-rest-framework---build-an-api-from-scratch">Django REST Framework - Build an API from Scratch</a></ul><h2 id="setup-the-virtual-env--install-django"><span class="mr-2">setup the virtual env &amp; install <code class="language-plaintext highlighter-rouge"><span class="mr-2">Django</code></span><a href="#setup-the-virtual-env--install-django" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>Verify Python version<div class="language-zsh highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>  % python <span class="nt">--version</span>
+    zsh: <span class="nb">command </span>not found: python
+  % python3 <span class="nt">--version</span>
+    Python 3.9.12  
+  % <span class="nb">pwd</span>  
+    /Users/andy.shao/andy_workplace/labs02/django  
+</pre></table></code></div></div><li><p>create a virtual env<br /> <code class="language-plaintext highlighter-rouge">python3 -m venv .venv</code></p><li><strong>IMPORTANT)</strong> activate the venv<div class="language-zsh highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>  % <span class="nb">.</span> .venv/bin/activate       
+  <span class="o">(</span>.venv<span class="o">)</span> andy.shao@AMAC02C83ZPMD6M django % 
+</pre></table></code></div></div><li>install Django<div class="language-zsh highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre><td class="rouge-code"><pre>  % pip <span class="nb">install </span>django
+    ...
+  % pip freeze
+    <span class="nv">asgiref</span><span class="o">==</span>3.5.2
+    <span class="nv">Django</span><span class="o">==</span>4.0.6
+    <span class="nv">sqlparse</span><span class="o">==</span>0.4.2
+  % python <span class="nt">--version</span>
+    Python 3.9.12
+</pre></table></code></div></div></ul><h2 id="start-a-django-project"><span class="mr-2">start a Django project</span><a href="#start-a-django-project" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><div class="language-zsh highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre>    <span class="o">(</span>.venv<span class="o">)</span> andy.shao@AMAC02C83ZPMD6M movies % <span class="nb">pwd</span>
+      /Users/andy.shao/andy_workplace/labs02/django/movies
+    % ../.venv/bin/django-admin startproject movies <span class="nb">.</span> 
+    % tree     <span class="c">## -a shows the hiden files  </span>
+      <span class="nb">.</span>
+      ├── manage.py
+      └── movies
+          ├── __init__.py
+          ├── asgi.py
+          ├── settings.py
+          ├── urls.py
+          └── wsgi.py
+
+</pre></table></code></div></div><h2 id="google-a-django-gitignore-file"><span class="mr-2">google a Django .gitignore file</span><a href="#google-a-django-gitignore-file" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>https://www.toptal.com/developers/gitignore/api/django<li><p>download the .gitignore file to the parent <code class="language-plaintext highlighter-rouge">movie</code> folder</p><div class="language-zsh highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>  <span class="o">(</span>.venv<span class="o">)</span> andy.shao@AMAC02C83ZPMD6M movies % <span class="nb">ls</span> <span class="nt">-a</span>
+    <span class="nb">.</span>        .gitignore      movies
+    ..       manage.py
+</pre></table></code></div></div></ul><h2 id="start-web-server-in-bash-for-this-time"><span class="mr-2">start web server (in <code class="language-plaintext highlighter-rouge"><span class="mr-2">bash</code> for this time)</span><a href="#start-web-server-in-bash-for-this-time" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>activate the <code class="language-plaintext highlighter-rouge">venv</code> virtual environment<div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre>  <span class="c">## activate the venv  </span>
+  <span class="nv">$ </span><span class="nb">pwd</span>
+    /Users/andy.shao/andy_workplace/labs02/django/movies
+  <span class="nv">$ </span><span class="nb">ls</span> ../.venv/bin/
+    Activate.ps1   activate.fish  pip3           python3        
+    activate       django-admin   pip3.9         python3.9      
+    activate.csh   pip            python         sqlformat      
+
+  <span class="nv">$ </span><span class="nb">.</span> ../.venv/bin/activate
+
+  <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span><span class="nb">pwd</span>
+    /Users/andy.shao/andy_workplace/labs02/django/movies
+  <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span><span class="nb">ls
+    </span>db.sqlite3      manage.py       movies
+  <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span><span class="nb">ls</span> <span class="nt">-a</span> movies/
+    <span class="nb">.</span>    ..   __init__.py   __pycache__    asgi.py   settings.py   urls.py   wsgi.py
+</pre></table></code></div></div><li>Start a web server with <code class="language-plaintext highlighter-rouge">python manage.py</code><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+</pre><td class="rouge-code"><pre>  <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span>python manage.py <span class="nb">help
+    </span>Type <span class="s1">'manage.py help &lt;subcommand&gt;'</span> <span class="k">for </span><span class="nb">help </span>on a specific subcommand.
+    Available subcommands:
+
+    <span class="o">[</span>auth]
+        changepassword
+        createsuperuser
+
+    <span class="o">[</span>contenttypes]
+        remove_stale_contenttypes
+
+    <span class="o">[</span>django]
+        check
+        compilemessages
+        createcachetable
+        dbshell
+        diffsettings
+        dumpdata
+        flush
+        inspectdb
+        loaddata
+        makemessages
+        makemigrations
+        migrate
+        sendtestemail
+        shell
+        showmigrations
+        sqlflush
+        sqlmigrate
+        sqlsequencereset
+        squashmigrations
+        startapp
+        startproject
+        <span class="nb">test
+        </span>testserver
+
+    <span class="o">[</span>sessions]
+        clearsessions
+
+    <span class="o">[</span>staticfiles]
+        collectstatic
+        findstatic
+        runserver
+    
+  <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span>python manage.py runserver
+    Watching <span class="k">for </span>file changes with StatReloader
+    Performing system checks...
+
+    System check identified no issues <span class="o">(</span>0 silenced<span class="o">)</span><span class="nb">.</span>
+
+    You have 18 unapplied migration<span class="o">(</span>s<span class="o">)</span><span class="nb">.</span> Your project may not work properly <span class="k">until </span>you apply the migrations <span class="k">for </span>app<span class="o">(</span>s<span class="o">)</span>: admin, auth, contenttypes, sessions.
+    Run <span class="s1">'python manage.py migrate'</span> to apply them.
+    July 30, 2022 - 01:50:05
+    Django version 4.0.6, using settings <span class="s1">'movies.settings'</span>
+    Starting development server at http://127.0.0.1:8000/
+    Quit the server with CONTROL-C.
+</pre></table></code></div></div><p><img data-src="/assets/images/django-web-api/2022-07-30-11-53-05.png" alt="" data-proofer-ignore></p><p><img data-src="/assets/images/django-web-api/2022-07-30-11-53-38.png" alt="" data-proofer-ignore></p><li>In case of Error <code class="language-plaintext highlighter-rouge">_sqlite3</code><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>  File <span class="s2">"/usr/local/lib/python3.7/sqlite3/dbapi2.py"</span>, line 27, <span class="k">in</span> &lt;module&gt;
+      from _sqlite3 import <span class="k">*</span>
+  ModuleNotFoundError: No module named <span class="s1">'_sqlite3'</span>
+</pre></table></code></div></div><p>OR</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>  File <span class="s2">"/home/andys/.venv/lib/python3.9/site-packages/django/db/backends/sqlite3/_functions.py"</span>, line 45, <span class="k">in </span>register
+      create_deterministic_function<span class="o">(</span><span class="s2">"django_date_extract"</span>, 2, _sqlite_datetime_extract<span class="o">)</span>
+  django.db.utils.NotSupportedError: <span class="nv">deterministic</span><span class="o">=</span>True requires SQLite 3.8.3 or higher
+</pre></table></code></div></div><ul><li><p>Solution: changing the database from <code class="language-plaintext highlighter-rouge">sqlite3</code> to <code class="language-plaintext highlighter-rouge">pysqlite3</code></p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>  pip3 <span class="nb">install </span>pysqlite3
+  pip3 <span class="nb">install </span>pysqlite3-binary 
+
+  vim ~/.venv/lib/python3.9/site-packages/django/db/backends/sqlite3/base.py
+    <span class="c"># from sqlite3 import dbapi2 as Database # annotation</span>
+    from pysqlite3 import dbapi2 as Database <span class="c"># import pysqlite3</span>
+</pre></table></code></div></div><p>Restart django server and it works.</p></ul></ul><h2 id="urlpatterns-list-routes-urls-to-views"><span class="mr-2">urlpatterns list routes URLs to views</span><a href="#urlpatterns-list-routes-urls-to-views" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>urls.py<div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre>  <span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+  <span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+  <span class="kn">from</span> <span class="nn">movies</span> <span class="kn">import</span> <span class="n">views</span>
+
+  <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="n">path</span><span class="p">(</span><span class="s">'admin/'</span><span class="p">,</span> <span class="n">admin</span><span class="p">.</span><span class="n">site</span><span class="p">.</span><span class="n">urls</span><span class="p">),</span>
+      <span class="n">path</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">home</span><span class="p">),</span>
+      <span class="n">path</span><span class="p">(</span><span class="s">'movies/'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">movies</span><span class="p">),</span>
+  <span class="p">]</span>
+</pre></table></code></div></div></ul><h2 id="create-views---response-with-message"><span class="mr-2">create views - response with message</span><a href="#create-views---response-with-message" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>new a file - <code class="language-plaintext highlighter-rouge">views.py</code><div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>  <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+
+  <span class="k">def</span> <span class="nf">movies</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">"Hello there!"</span><span class="p">)</span> 
+    
+  <span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">"home page!"</span><span class="p">)</span>
+</pre></table></code></div></div><p><img data-src="/assets/images/django-web-api/2022-07-30-12-39-46.png" alt="" data-proofer-ignore></p></ul><h2 id="create-views---render-the-template"><span class="mr-2">create views - render the template</span><a href="#create-views---render-the-template" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>update <code class="language-plaintext highlighter-rouge">movies</code> in views.py<div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre>  <span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpResponse</span>
+  <span class="kn">from</span> <span class="nn">django.shortcuts</span> <span class="kn">import</span> <span class="n">render</span>
+
+  <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s">'movies'</span><span class="p">:</span> <span class="p">[</span><span class="s">'movie1'</span><span class="p">,</span> <span class="s">'movie2'</span><span class="p">]</span>
+  <span class="p">}</span>
+
+  <span class="k">def</span> <span class="nf">movies</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+      <span class="c1"># return HttpResponse("Hello there!")
+</span>      <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'movies/movies.html'</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+      <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="s">"home page!"</span><span class="p">)</span>
+
+</pre></table></code></div></div><li>create ./templates/movies/movies.html <code class="language-plaintext highlighter-rouge">template</code><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>    
+</pre></table></code></div></div><li><p>update <code class="language-plaintext highlighter-rouge">INSTALLED_APPS</code> in settings.py</p><div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>  <span class="c1"># Application definition
+</span>
+  <span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s">'movies'</span><span class="p">,</span>
+      <span class="s">'django.contrib.admin'</span><span class="p">,</span>
+</pre></table></code></div></div></ul><p><img data-src="/assets/images/django-web-api/2022-07-30-12-57-20.png" alt="" data-proofer-ignore></p><p><img data-src="/assets/images/django-web-api/2022-07-30-12-58-42.png" alt="" data-proofer-ignore></p><h2 id="mock-data-from-dictionary"><span class="mr-2">mock data from dictionary</span><a href="#mock-data-from-dictionary" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>expand <code class="language-plaintext highlighter-rouge">data</code>(movies) in views.py<div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre><td class="rouge-code"><pre>  data = {
+      'movies': [
+          {
+              'id': 5,
+              'title': 'Jaws',
+              'year': 1998
+          },
+          {
+              'id': 6,
+              'title': 'Sharknado',
+              'year': 2001
+          },
+          {
+              'id': 7,
+              'title': 'The Meg',
+              'year': 2010
+          }
+          
+      ]
+  } 
+</pre></table></code></div></div><p><img data-src="/assets/images/django-web-api/2022-07-30-13-13-35.png" alt="" data-proofer-ignore></p><li><p>loop through movies data in ./templates/movies/movies.html <code class="language-plaintext highlighter-rouge">template</code><br /> ``</p><div class="language-html highlighter-rouge"><div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre>  <span class="cp">&lt;!DOCTYPE html&gt;</span>
+
+  <span class="nt">&lt;html&gt;</span>
+      <span class="nt">&lt;head&gt;</span> 
+        <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;title&gt;</span> movies <span class="nt">&lt;/title&gt;</span> 
+      <span class="nt">&lt;/head&gt;</span>
+        
+      <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span>Movies<span class="nt">&lt;/h1&gt;</span>
+
+        <span class="nt">&lt;ul&gt;</span>
+          
+
+        <span class="nt">&lt;/ul&gt;</span>
+      <span class="nt">&lt;body&gt;</span>
+  <span class="nt">&lt;/html&gt;</span>
+</pre></table></code></div></div><p><img data-src="/assets/images/django-web-api/2022-07-30-13-50-01.png" alt="" data-proofer-ignore></p></ul><h2 id="migrate--createsuperuser-password"><span class="mr-2">Migrate &amp; createsuperuser (password)</span><a href="#migrate--createsuperuser-password" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre><td class="rouge-code"><pre>    <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span>python manage.py migrate
+      Operations to perform:
+        Apply all migrations: admin, auth, contenttypes, sessions
+    <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span>python manage.py createsuperuser 
+      Username <span class="o">(</span>leave blank to use <span class="s1">'andy.shao'</span><span class="o">)</span>: admin
+      Email address: user@email.com
+      Password: 
+      Password <span class="o">(</span>again<span class="o">)</span>: 
+      This password is too common.
+      Bypass password validation and create user anyway? <span class="o">[</span>y/N]: y
+</pre></table></code></div></div><h2 id="define-movie-data-model-dbsqlite3"><span class="mr-2">Define <code class="language-plaintext highlighter-rouge"><span class="mr-2">Movie</code> data model (db.sqlite3)</span><a href="#define-movie-data-model-dbsqlite3" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>Create a file - <code class="language-plaintext highlighter-rouge">models.py</code><div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>  <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>  
+
+  <span class="k">class</span> <span class="nc">Movie</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_lenth</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+      <span class="n">year</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">IntegerField</span><span class="p">()</span>
+</pre></table></code></div></div><li><p><code class="language-plaintext highlighter-rouge">makemigration</code> of the Model in app <code class="language-plaintext highlighter-rouge">movies</code></p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>  <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span>python manage.py makemigrations movies
+    Migrations <span class="k">for</span> <span class="s1">'movies'</span>:
+      movies/migrations/0001_initial.py
+        - Create model Movie
+</pre></table></code></div></div><li>Verify 0001_initial.py<div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre>  <span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span><span class="p">,</span> <span class="n">models</span>
+
+  <span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="p">.</span><span class="n">Migration</span><span class="p">):</span>
+      <span class="n">initial</span> <span class="o">=</span> <span class="bp">True</span>
+
+      <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">]</span>
+
+      <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span>
+          <span class="n">migrations</span><span class="p">.</span><span class="n">CreateModel</span><span class="p">(</span>
+              <span class="n">name</span><span class="o">=</span><span class="s">'Movie'</span><span class="p">,</span>
+              <span class="n">fields</span><span class="o">=</span><span class="p">[</span>
+                  <span class="p">(</span><span class="s">'id'</span><span class="p">,</span> <span class="n">models</span><span class="p">.</span><span class="n">BigAutoField</span><span class="p">(</span><span class="n">auto_created</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">serialize</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">verbose_name</span><span class="o">=</span><span class="s">'ID'</span><span class="p">)),</span>
+                  <span class="p">(</span><span class="s">'title'</span><span class="p">,</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)),</span>
+                  <span class="p">(</span><span class="s">'year'</span><span class="p">,</span> <span class="n">models</span><span class="p">.</span><span class="n">IntegerField</span><span class="p">()),</span>
+              <span class="p">],</span>
+          <span class="p">),</span>
+      <span class="p">]</span>
+</pre></table></code></div></div><li><p>Optional) <code class="language-plaintext highlighter-rouge">sqlmigrate</code> <code class="language-plaintext highlighter-rouge">Movie</code> in <code class="language-plaintext highlighter-rouge">movies</code> app <br /> <code class="language-plaintext highlighter-rouge">sqlmigrate</code> doesn’t actuall do anything but only:<br /> Prints the SQL statements for the <code class="language-plaintext highlighter-rouge">named migration</code>.</p><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>  <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span>python manage.py sqlmigrate movies 0001
+    BEGIN<span class="p">;</span>
+    <span class="nt">--</span>
+    <span class="nt">--</span> Create model Movie
+    <span class="nt">--</span>
+    CREATE TABLE <span class="s2">"movies_movie"</span> <span class="o">(</span><span class="s2">"id"</span> integer NOT NULL PRIMARY KEY AUTOINCREMENT, <span class="s2">"title"</span> varchar<span class="o">(</span>200<span class="o">)</span> NOT NULL, <span class="s2">"year"</span> integer NOT NULL<span class="o">)</span><span class="p">;</span>
+    COMMIT<span class="p">;</span>
+</pre></table></code></div></div><li>Apply the migration of <code class="language-plaintext highlighter-rouge">moview</code> app<br /> <strong>Note</strong>) <code class="language-plaintext highlighter-rouge">movies</code> in the app list<br /> You may also use: <code class="language-plaintext highlighter-rouge">python manage.py migrate movies</code><div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>  <span class="p">(.</span><span class="n">venv</span><span class="p">)</span> <span class="err">$</span> <span class="n">python</span> <span class="n">manage</span><span class="p">.</span><span class="n">py</span> <span class="n">migrate</span> 
+    <span class="n">Operations</span> <span class="n">to</span> <span class="n">perform</span><span class="p">:</span>
+      <span class="n">Apply</span> <span class="nb">all</span> <span class="n">migrations</span><span class="p">:</span> <span class="n">admin</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">contenttypes</span><span class="p">,</span> <span class="n">movies</span><span class="p">,</span> <span class="n">sessions</span>
+    <span class="n">Running</span> <span class="n">migrations</span><span class="p">:</span>
+      <span class="n">Applying</span> <span class="n">movies</span><span class="p">.</span><span class="mi">0001</span><span class="n">_initial</span><span class="p">...</span> <span class="n">OK</span>
+</pre></table></code></div></div></ul><h2 id="add-the-new-table-movie-to-admin-page"><span class="mr-2">Add the new table <code class="language-plaintext highlighter-rouge"><span class="mr-2">Movie</code> to Admin page</span><a href="#add-the-new-table-movie-to-admin-page" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>create admin.py and register <code class="language-plaintext highlighter-rouge">Movie</code> to Admin page<div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>  <span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+  <span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Movie</span>  
+
+  <span class="n">admin</span><span class="p">.</span><span class="n">site</span><span class="p">.</span><span class="n">register</span><span class="p">(</span><span class="n">Movie</span><span class="p">)</span>
+</pre></table></code></div></div><li><p>restart server<br /> <code class="language-plaintext highlighter-rouge">(.venv) $ python manage.py runserver</code> ## listens on 127.0.0.1 loopback only<br /> <code class="language-plaintext highlighter-rouge">(.venv) $ python manage.py runserver 0.0.0.0:8000</code> ## to listen on every interface on port 8000</p><li><p>Verify the table on Admin page <br /> <img data-src="/assets/images/django-web-api/2022-07-30-16-45-18.png" alt="" data-proofer-ignore></p><p><img data-src="/assets/images/django-web-api/2022-07-30-16-46-12.png" alt="" data-proofer-ignore></p><li>Improve the description of the table object: Movie object (2)<br /> override a method inside the model<div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>  <span class="k">class</span> <span class="nc">Movie</span><span class="p">(</span><span class="n">models</span><span class="p">.</span><span class="n">Model</span><span class="p">):</span>
+      <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+      <span class="n">year</span> <span class="o">=</span> <span class="n">models</span><span class="p">.</span><span class="n">IntegerField</span><span class="p">()</span>
+        
+      <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+          <span class="k">return</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">title</span><span class="si">}</span><span class="s"> from </span><span class="si">{</span><span class="bp">self</span><span class="p">.</span><span class="n">year</span><span class="si">}</span><span class="s">'</span>
+</pre></table></code></div></div><li><p>Verify the table on Admin page</p><p><img data-src="/assets/images/django-web-api/2022-07-30-16-54-09.png" alt="" data-proofer-ignore></p></ul><h2 id="query-data-from-the-database"><span class="mr-2">Query data from the database</span><a href="#query-data-from-the-database" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>Modify views.py<div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>  <span class="p">...</span>
+  <span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Movie</span>     <span class="c1"># new
+</span>
+  <span class="k">def</span> <span class="nf">movies</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+      <span class="n">data</span> <span class="o">=</span> <span class="n">Movie</span><span class="p">.</span><span class="n">objects</span><span class="p">.</span><span class="nb">all</span><span class="p">()</span>   <span class="c1"># new
+</span>
+      <span class="c1"># return HttpResponse("Hello there!")
+</span>      <span class="c1"># return render(request, 'movies/movies.html', data)
+</span>      <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="s">'movies/movies.html'</span><span class="p">,</span> <span class="p">{</span><span class="s">'movies'</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>   <span class="c1"># new
+</span>
+  <span class="p">...</span>
+
+</pre></table></code></div></div><p><img data-src="/assets/images/django-web-api/2022-07-30-21-42-40.png" alt="" data-proofer-ignore></p></ul><h2 id="detail-viewtemplate"><span class="mr-2">Detail View/Template</span><a href="#detail-viewtemplate" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>new <code class="language-plaintext highlighter-rouge">detail</code> view in <code class="language-plaintext highlighter-rouge">views.py</code><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>  ...
+  def detail(request, id):
+      data = Movie.objects.get(pk=id)
+      return render(request, 'movies/detail.html', {'movie': data})
+</pre></table></code></div></div><li>new URL o views.detail <code class="language-plaintext highlighter-rouge">urls.py</code><div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>  <span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">...</span>
+      <span class="n">path</span><span class="p">(</span><span class="s">'movies/&lt;int:id&gt;'</span><span class="p">,</span> <span class="n">views</span><span class="p">.</span><span class="n">detail</span><span class="p">),</span>
+      <span class="p">...</span>
+</pre></table></code></div></div><li>detail.html template<div class="language-html highlighter-rouge"><div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre><td class="rouge-code"><pre>  <span class="nt">&lt;ul&gt;</span>
+    <span class="nt">&lt;li&gt;</span>, , <span class="nt">&lt;/li&gt;</span> 
+  <span class="nt">&lt;/ul&gt;</span>
+</pre></table></code></div></div><li>Anchor the link to <code class="language-plaintext highlighter-rouge">detail.html</code> in movies.html<div class="language-html highlighter-rouge"><div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>    
+</pre></table></code></div></div><p><img data-src="/assets/images/django-web-api/2022-07-30-22-45-55.png" alt="" data-proofer-ignore></p><p><img data-src="/assets/images/django-web-api/2022-07-30-22-46-09.png" alt="" data-proofer-ignore></p></ul><h2 id="create-a-movie"><span class="mr-2">Create a movie</span><a href="#create-a-movie" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>new url to <code class="language-plaintext highlighter-rouge">urls.py</code><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>  path('movies/add', views.add),
+</pre></table></code></div></div><li>Add a link to <code class="language-plaintext highlighter-rouge">movies/add</code> in movies.html<div class="language-html highlighter-rouge"><div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">'movies/add'</span><span class="nt">&gt;</span> Add movie <span class="nt">&lt;/a&gt;</span>
+</pre></table></code></div></div><li>new view <code class="language-plaintext highlighter-rouge">add</code> in <code class="language-plaintext highlighter-rouge">views.py</code><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre>  from django.http import HttpResponseRedirect   
+  ...
+  def add(request):
+      title = request.POST.get('title')
+      year = request.POST.get('year')
+
+      if title and year:
+          movie = Movie(title=title, year=year)
+          movie.save()
+          return HttpResponseRedirect("/movies")
+
+      return render(request, 'movies/add.html')
+</pre></table></code></div></div><li>add.html template<div class="language-html highlighter-rouge"><div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>  <span class="nt">&lt;form</span> <span class="na">action=</span><span class="s">"/movies/add"</span> <span class="na">method=</span><span class="s">"POST"</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"title"</span> <span class="na">id=</span><span class="s">"title"</span> <span class="na">placeholder=</span><span class="s">"Movie title"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">name=</span><span class="s">"year"</span> <span class="na">id=</span><span class="s">"year"</span> <span class="na">placeholder=</span><span class="s">"Movie year"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"submit"</span> <span class="na">value=</span><span class="s">"Add"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;/form&gt;</span>
+</pre></table></code></div></div><p><img data-src="/assets/images/django-web-api/2022-08-28-23-12-29.png" alt="" data-proofer-ignore></p><li><p>Error if <code class="language-plaintext highlighter-rouge">csrf_token</code> not presents <br /> <img data-src="/assets/images/django-web-api/2022-07-30-23-27-38.png" alt="" data-proofer-ignore></p><li><p>inspect the <code class="language-plaintext highlighter-rouge">add</code> POST payload <br /> <code class="language-plaintext highlighter-rouge">Network / Payload</code><br /> <img data-src="/assets/images/django-web-api/2022-07-30-23-35-38.png" alt="" data-proofer-ignore></p><li><p>excercise<br /> <img data-src="/assets/images/django-web-api/2022-07-30-23-56-17.png" alt="" data-proofer-ignore></p><p><img data-src="/assets/images/django-web-api/2022-07-30-23-57-12.png" alt="" data-proofer-ignore></p><p><img data-src="/assets/images/django-web-api/2022-07-30-23-57-25.png" alt="" data-proofer-ignore></p></ul><h2 id="delete-a-movie"><span class="mr-2">Delete a movie</span><a href="#delete-a-movie" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li>new url to <code class="language-plaintext highlighter-rouge">urls.py</code><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>  path('movies/delete', views.delete),
+</pre></table></code></div></div><li>Add a link to <code class="language-plaintext highlighter-rouge">movies/delete</code> in detail.html<div class="language-html highlighter-rouge"><div class="code-header"> <span data-label-text="HTML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">'movies/delete'</span><span class="nt">&gt;</span> Delete movie <span class="nt">&lt;/a&gt;</span>
+</pre></table></code></div></div><li>new view <code class="language-plaintext highlighter-rouge">delete</code> in <code class="language-plaintext highlighter-rouge">views.py</code><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>  def delete(request, id):
+      movie = Movie.objects.get(pk=id)
+      movie.delete()
+      return HttpResponseRedirect("/movies")
+</pre></table></code></div></div><li><p>excercise<br /> <img data-src="/assets/images/django-web-api/2022-07-31-12-15-34.png" alt="" data-proofer-ignore></p><p><strong>Note</strong>) When <code class="language-plaintext highlighter-rouge">test01</code> clicked: <br /> <img data-src="/assets/images/django-web-api/2022-07-31-12-15-56.png" alt="" data-proofer-ignore></p><p><strong>Note</strong>) When <code class="language-plaintext highlighter-rouge">Delete movie</code> clicked: <br /> <img data-src="/assets/images/django-web-api/2022-07-31-12-16-12.png" alt="" data-proofer-ignore></p></ul><h2 id="exception-handling-of-delete"><span class="mr-2">Exception Handling of Delete</span><a href="#exception-handling-of-delete" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><ul><li><p>test with a non-existing ID ( <code class="language-plaintext highlighter-rouge">111</code> )</p><li><p>DEBUG on (default)<br /> <img data-src="/assets/images/django-web-api/2022-07-31-12-46-02.png" alt="" data-proofer-ignore></p><p><img data-src="/assets/images/django-web-api/2022-07-31-12-46-39.png" alt="" data-proofer-ignore></p><p><img data-src="/assets/images/django-web-api/2022-07-31-12-53-37.png" alt="" data-proofer-ignore></p><li>DEBUG off in <code class="language-plaintext highlighter-rouge">settings.py</code><div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre>  <span class="c1"># DEBUG = True
+</span>  <span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">False</span>
+  <span class="c1"># ALLOWED_HOSTS = []
+</span>  <span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'localhost'</span><span class="p">]</span>
+</pre></table></code></div></div><p>Bad Request (400) <br /> <img data-src="/assets/images/django-web-api/2022-07-31-12-41-41.png" alt="" data-proofer-ignore></p><li>Change <code class="language-plaintext highlighter-rouge">localhost</code> to <code class="language-plaintext highlighter-rouge">127.0.0.1</code><div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre>  <span class="c1"># DEBUG = True
+</span>  <span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">False</span>
+
+  <span class="c1"># ALLOWED_HOSTS = []
+</span>  <span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[</span><span class="s">'127.0.0.1'</span><span class="p">]</span>
+</pre></table></code></div></div><p>Server Error (500)<br /> <img data-src="/assets/images/django-web-api/2022-07-31-12-56-40.png" alt="" data-proofer-ignore></p></ul><h1 id="django-rest-framework---build-an-api-from-scratch">Django REST Framework - Build an API from Scratch</h1><ul><li><p>Ref: https://youtu.be/i5JykvxUk_A</p><li><p>Continued with the above <code class="language-plaintext highlighter-rouge">movies</code> project</p><li>Install <code class="language-plaintext highlighter-rouge">restframework</code><div class="language-bash highlighter-rouge"><div class="code-header"> <span data-label-text="Shell"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>  <span class="o">(</span>.venv<span class="o">)</span> <span class="nv">$ </span>pip <span class="nb">install </span>djangorestframework   
+</pre></table></code></div></div><p><img data-src="/assets/images/django-web-api/2022-08-01-11-34-57.png" alt="" data-proofer-ignore></p><li><p>update <code class="language-plaintext highlighter-rouge">INSTALLED_APPS</code> in settings.py</p><div class="language-python highlighter-rouge"><div class="code-header"> <span data-label-text="Python"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre>  <span class="c1"># Application definition
+</span>
+  <span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="s">'rest_framework'</span><span class="p">,</span>
+      <span class="s">'movies_rest'</span><span class="p">,</span>
+      <span class="s">'django.contrib.admin'</span><span class="p">,</span>
+</pre></table></code></div></div><li>Serialize JSON Object to JSON format in serializers.py<div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>  from rest_framework import serializers
+  from .models import Drink
+
+  class MovieSerializer(serializer.ModelSerializer):
+      Class Meta:
+          model = Movie
+          fields = ['id', 'title', 'year']
+</pre></table></code></div></div><li>new REST url in <code class="language-plaintext highlighter-rouge">urls.py</code><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>  path('movies_rest/', views.movie_list),
+</pre></table></code></div></div><li>new view <code class="language-plaintext highlighter-rouge">movie_list</code> in <code class="language-plaintext highlighter-rouge">views.py</code><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span data-label-text="Plaintext"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>  from django.http import JsonResponse
+  from .serializers import MovieSerializer
+
+  def movie_list(request):
+      movies = Movie.objects.all()
+      serializer = MovieSerializer(movies, many=True)
+      return JsonResponse({"movies": serializer.data}, safe=False)
+</pre></table></code></div></div><li>verify the REST API server <br /> <code class="language-plaintext highlighter-rouge">http://127.0.0.1:8000/movies_rest/</code><br /> <img data-src="/assets/images/django-web-api/2022-08-01-11-52-14.png" alt="" data-proofer-ignore></ul></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/django/'>django</a>, <a href='/categories/web-api/'>Web-API</a></div><div class="post-tags"> <i class="fa fa-tags fa-fw mr-1"></i> <a href="/tags/django/" class="post-tag no-text-decoration" >django</a> <a href="/tags/web/" class="post-tag no-text-decoration" >web</a> <a href="/tags/rest/" class="post-tag no-text-decoration" >REST</a> <a href="/tags/api/" class="post-tag no-text-decoration" >API</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Django+Web+Framework+and+REST+API+-+DevOps&url=%2Fposts%2Fdjango-web-api%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Django+Web+Framework+and+REST+API+-+DevOps&u=%2Fposts%2Fdjango-web-api%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=%2Fposts%2Fdjango-web-api%2F&text=Django+Web+Framework+and+REST+API+-+DevOps" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/django-web-api/">Django Web Framework and REST API</a><li><a href="/posts/hosting-a-free-blog-site-on-Github/">Quick guide to hosting a free blog site on github.io</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/api/">API</a> <a class="post-tag" href="/tags/chirpy/">chirpy</a> <a class="post-tag" href="/tags/django/">django</a> <a class="post-tag" href="/tags/github-pages/">github_pages</a> <a class="post-tag" href="/tags/graph/">graph</a> <a class="post-tag" href="/tags/graphviz/">Graphviz</a> <a class="post-tag" href="/tags/jekyll/">jekyll</a> <a class="post-tag" href="/tags/rest/">REST</a> <a class="post-tag" href="/tags/terraform/">terraform</a> <a class="post-tag" href="/tags/theme/">theme</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/visual-terraform/"><div class="card-body"> <em class="small" data-ts="1660781920" data-df="ll" > Aug 18, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Visual representation of Terraform plan</h3><div class="text-muted small"><p> Intro https://www.terraform.io/cli/commands/graph Generate a visual representation of either a configuration or execution plan. The output is in the DOT format, which can be used by GraphViz to...</p></div></div></a></div><div class="card"> <a href="/posts/hosting-a-free-blog-site-on-Github/"><div class="card-body"> <em class="small" data-ts="1659779920" data-df="ll" > Aug 6, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Quick guide to hosting a free blog site on github.io</h3><div class="text-muted small"><p> Facts This site is hosted on Github Pages with Jekyll Jekyll in Ruby: Static site generator (Chirpy Theme) Local workstation: MacOS Tools: Visual Code / git / Ruby Adding content (post) ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/hosting-a-free-blog-site-on-Github/" class="btn btn-outline-primary" prompt="Older"><p>Quick guide to hosting a free blog site on github.io</p></a> <a href="/posts/visual-terraform/" class="btn btn-outline-primary" prompt="Newer"><p>Visual representation of Terraform plan</p></a></div></div></div><footer class="row pl-3 pr-3"><div class="col-12 d-flex justify-content-between align-items-center text-muted pl-0 pr-0"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://github.com/andyshaoych">Andy Shao</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/api/">API</a> <a class="post-tag" href="/tags/chirpy/">chirpy</a> <a class="post-tag" href="/tags/django/">django</a> <a class="post-tag" href="/tags/github-pages/">github_pages</a> <a class="post-tag" href="/tags/graph/">graph</a> <a class="post-tag" href="/tags/graphviz/">Graphviz</a> <a class="post-tag" href="/tags/jekyll/">jekyll</a> <a class="post-tag" href="/tags/rest/">REST</a> <a class="post-tag" href="/tags/terraform/">terraform</a> <a class="post-tag" href="/tags/theme/">theme</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a><div id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-animation="true" data-autohide="false"><div class="toast-header"> <button type="button" class="ml-2 ml-auto close" data-dismiss="toast" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div><div class="toast-body text-center pt-0"><p class="pl-2 pr-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></div><script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script>
